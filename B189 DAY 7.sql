@@ -124,7 +124,7 @@ SELECT * FROM words;
 
 SELECT * FROM developers WHERE name='Enes Can'
 
---wildcard(joker --> %) 0 veya daha fazla karakteri temsil eder. 
+--wildcard(%) 0 veya daha fazla karakteri temsil eder. 
 SELECT *
 FROM developers
 WHERE name LIKE 'E%' --E'li bişeyler işte diyoruz.
@@ -140,9 +140,97 @@ FROM developers
 WHERE name LIKE 'T%n';
 
 --Ismi içinde 'an' olan dev isimlerini ve maaşlarını yazdiran QUERY yazin
-SELECT name,salary
+SELECT *
 FROM developers
-WHERE name LIKE '%an%';
+WHERE name LIKE '%a%' AND name LIKE '%e%';
+
+--al?
+--underscore(_): sadece 1 karakteri temsil eder.
+
+--Isminin ikinci harfi ü olan devlerin tum bilgilerini yazdiran QUERY yazin. ('_ü%')
+SELECT *
+FROM developers
+WHERE name LIKE '_ü%'
+
+--Kullandığı prog. dili 4 harfli ve üçüncü harfi v olan devlerin tum bilgilerini yazdiran QUERY yazin
+SELECT *
+FROM developers
+WHERE name LIKE '__v_'
 
 
+--Kullandığı prog. dili en az 5 harfli ve ilk harfi J olan devlerin tum bilgilerini yazdiran QUERY yazin.ÖDEVVV 'j___%'
+--HINT:sadece JavaScript olacak
+--Isminin 2. harfi e,4. harfi y olan devlerin tum bilgilerini yazdiran QUERY yazin. ÖDEVV
+--ismi boşluk içeren devlerin tum bilgilerini yazdiran QUERY yazin:ÖDEVVVV
+
+
+--38-REGEXP_LIKE(~): belirli karakter deseni içerek dataları regex kullanarak filtrelememizi sağlar.
+--[]: içerisindeki harflerden en az birini temsil eder.
+
+--h harfinden sonra a veya i harfini sonra ise t harfini içeren kelimelerin tum bilgilerini yazdiran QUERY yaziniz.
+SELECT *
+FROM words
+WHERE word ~'h[ai]t' --hat or hit
+
+
+SELECT *
+FROM words
+WHERE word ~* 'h[ai]t' --case insensitive oldu. 
+
+--küçük/büyük harf hassasiyeti olmasın istiyorsak asterix de ekleriz.
+--[a-h] iki harf arasındaki harfleri alır.
+
+SELECT *
+FROM words
+WHERE word ~* 'h[a-i]t'
+
+
+-- Icinde m veya i olan kelimelerin tum bilgilerini yazdiran QUERY yazin
+
+SELECT *
+FROM words
+WHERE word ~*'[m,i]'
+
+-- ^: başlangıcını gösterir
+-- $: bitişini gösterir
+
+--a ile baslayan kelimelerin tum bilgilerini yazdiran QUERY yazin
+SELECT *
+FROM words
+WHERE word ~*'^a'
+
+--a veya s ile baslayan kelimelerin tum bilgilerini yazdiran QUERY yazin
+SELECT *
+FROM words
+WHERE word ~*'^[as]'
+
+--m biten kelimelerin tum bilgilerini yazdiran QUERY yazin
+SELECT *
+FROM words
+WHERE word ~*'m$'
+
+-- (.*): --> Wildcard burada da var. 0 veya daha fazla kararkter
+-- .: -->1 karakter anlamına gelir. _ yani.
+
+--y ile başlayıp f ile biten kelimelerin tum bilgilerini yazdiran QUERY yazin
+SELECT *
+FROM words
+WHERE word ~*'^y.*f$'
+
+
+--NOT LIKE: verilen karakter desenine benzemeyenleri filtreler
+-- !~     : verilen karakter desinene benzemeyenleri filtreler
+
+--ilk harfi h veya H olmayan kelimelerin tüm bilgileirini yazdıran QUERY yazınız.
+
+SELECT *
+FROM words
+WHERE word NOT ILIKE 'h%' --ILIKE insensitive
+
+--ilk harfi h veya H olmayan kelimelerin tüm bilgileirini yazdıran QUERY yazınız. REGEX version
+SELECT *
+FROM words
+WHERE word !~* '^h'
+
+--2. harfi e,i veya o olmayan kelimelerin tum bilgilerini yazdiran QUERY yazin.ÖDEV
 
